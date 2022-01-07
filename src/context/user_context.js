@@ -36,12 +36,17 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const logout = () => {
+    setUser(null, null);
+    return { success: true, message: 'Logged Out' };
+  };
+
   useEffect(() => {
     checkAuth();
   }, []);
 
   return (
-    <UserContext.Provider value={{ currentUser, login }}>
+    <UserContext.Provider value={{ currentUser, login, logout }}>
       {children}
     </UserContext.Provider>
   );
