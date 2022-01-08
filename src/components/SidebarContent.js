@@ -1,15 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import NavItem from './NavItem';
 import { LinkItems } from '../utils/constants';
+import { useUserContext } from '../context/user_context';
+import logo from '../assets/logo.svg';
 import {
   Box,
   CloseButton,
   Flex,
   useColorModeValue,
-  Text,
+  Image,
 } from '@chakra-ui/react';
 
 export default function SidebarContent({ onClose, ...rest }) {
+  const {
+    currentUser: { privilege },
+  } = useUserContext();
+  const [Links, setLinks] = useState([]);
+
+  useEffect(() => {
+    if (privilege === 'super') {
+      setLinks(LinkItems);
+    }
+    if (privilege === 'moderate') {
+      const tempLinks = LinkItems.filter((link) => link.name !== 'Admins');
+      setLinks(tempLinks);
+    }
+    if (privilege === 'low') {
+      const tempLinks = LinkItems.filter(
+        (link) => link.name !== 'Admins' && link.name !== 'Products'
+      );
+      setLinks(tempLinks);
+    }
+  }, []);
+
   return (
     <Box
       transition='3s ease'
@@ -22,12 +45,10 @@ export default function SidebarContent({ onClose, ...rest }) {
       {...rest}
     >
       <Flex h='20' alignItems='center' mx='8' justifyContent='space-between'>
-        <Text fontSize='2xl' fontFamily='monospace' fontWeight='bold'>
-          Logo
-        </Text>
+        <Image src={logo} />
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
+      {Links.map((link) => (
         <NavItem key={link.name} icon={link.icon} url={link.url}>
           {link.name}
         </NavItem>

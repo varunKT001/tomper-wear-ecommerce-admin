@@ -1,13 +1,10 @@
 import React from 'react';
-import { Flex, Icon, Link } from '@chakra-ui/react';
+import { Flex, Icon, Link as ChakraLink } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 export default function NavItem({ url, icon, children, ...rest }) {
   return (
-    <Link
-      to={url}
-      style={{ textDecoration: 'none' }}
-      _focus={{ boxShadow: 'none' }}
-    >
+    <Link to={url}>
       <Flex
         align='center'
         p='4'
@@ -16,7 +13,7 @@ export default function NavItem({ url, icon, children, ...rest }) {
         role='group'
         cursor='pointer'
         _hover={{
-          bg: 'blue.400',
+          bg: 'brown.400',
           color: 'white',
         }}
         {...rest}

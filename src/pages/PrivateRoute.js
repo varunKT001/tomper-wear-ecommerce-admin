@@ -19,6 +19,23 @@ const PrivateRoute = ({ children, ...rest }) => {
     );
   }
 
+  if (rest.path === '/products') {
+    return currentUser &&
+      ['super', 'moderate'].includes(currentUser.privilege) ? (
+      <Route {...rest}>{children}</Route>
+    ) : (
+      <Redirect to={location.state?.from ?? '/'} />
+    );
+  }
+
+  if (rest.path === '/admins') {
+    return currentUser && currentUser.privilege === 'super' ? (
+      <Route {...rest}>{children}</Route>
+    ) : (
+      <Redirect to={location.state?.from ?? '/'} />
+    );
+  }
+
   return currentUser ? (
     <Route {...rest}>{children}</Route>
   ) : (

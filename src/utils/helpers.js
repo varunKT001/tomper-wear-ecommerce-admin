@@ -6,3 +6,32 @@ export const getLocalStorage = (id) => {
 export const setLocalStorage = (id, value) => {
   localStorage.setItem(id, value);
 };
+
+export const formatPrice = (number) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'INR',
+  }).format(number / 100);
+};
+
+export const getOrderStatusColor = (status) => {
+  if (status === 'processing') {
+    return 'orange';
+  }
+  if (status === 'rejected') {
+    return 'red';
+  }
+  return 'green';
+};
+
+export const getAdminPrivilegeColor = (privilege) => {
+  if (privilege === 'super') {
+    return 'green';
+  }
+  if (privilege === 'moderate') {
+    return 'blue';
+  }
+  if (privilege === 'low') {
+    return 'brown';
+  }
+};

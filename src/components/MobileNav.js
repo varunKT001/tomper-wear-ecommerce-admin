@@ -1,4 +1,5 @@
 import React from 'react';
+import logo from '../assets/logo.svg';
 import {
   IconButton,
   Avatar,
@@ -14,6 +15,7 @@ import {
   MenuItem,
   MenuList,
   useToast,
+  Image,
 } from '@chakra-ui/react';
 import { useUserContext } from '../context/user_context';
 import { FiMenu, FiChevronDown } from 'react-icons/fi';
@@ -56,14 +58,11 @@ export default function MobileNav({ onOpen, ...rest }) {
         icon={<FiMenu />}
       />
 
-      <Text
+      <Image
+        src={logo}
+        boxSize='150px'
         display={{ base: 'flex', md: 'none' }}
-        fontSize='2xl'
-        fontFamily='monospace'
-        fontWeight='bold'
-      >
-        Logo
-      </Text>
+      />
 
       <HStack spacing={{ base: '0', md: '6' }}>
         <Flex alignItems={'center'}>
@@ -74,12 +73,7 @@ export default function MobileNav({ onOpen, ...rest }) {
               _focus={{ boxShadow: 'none' }}
             >
               <HStack>
-                <Avatar
-                  size={'sm'}
-                  src={
-                    'https://e7.pngegg.com/pngimages/550/997/png-clipart-user-icon-foreigners-avatar-child-face.png'
-                  }
-                />
+                <Avatar size={'sm'} name={name} />
                 <VStack
                   display={{ base: 'none', md: 'flex' }}
                   alignItems='flex-start'

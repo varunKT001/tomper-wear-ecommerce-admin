@@ -1,6 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Dashboard, LoginPage, PrivateRoute } from './pages';
+import {
+  AdminsPage,
+  Dashboard,
+  LoginPage,
+  OrdersPage,
+  PrivateRoute,
+  ProductsPage,
+} from './pages';
 
 function App() {
   return (
@@ -8,6 +15,15 @@ function App() {
       <Switch>
         <PrivateRoute exact path='/'>
           <Dashboard />
+        </PrivateRoute>
+        <PrivateRoute exact path='/orders'>
+          <OrdersPage />
+        </PrivateRoute>
+        <PrivateRoute exact path='/products'>
+          <ProductsPage />
+        </PrivateRoute>
+        <PrivateRoute exact path='/admins'>
+          <AdminsPage />
         </PrivateRoute>
         <PrivateRoute exact path='/login'>
           <LoginPage />
