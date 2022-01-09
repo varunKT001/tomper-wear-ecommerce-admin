@@ -58,6 +58,7 @@ function SingleOrderPage() {
       single_order_status === 'processing' ||
       single_order_status === 'rejected'
     ) {
+      tempList.splice(3, 2);
       setStatusList([...tempList]);
     }
     if (single_order_status === 'confirmed') {

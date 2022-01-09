@@ -113,10 +113,12 @@ function CreateNewAdminModal() {
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme='brown' mr={3} onClick={handleSubmit}>
+            <Button mr={3} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme='brown' onClick={handleSubmit}>
               Save
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
