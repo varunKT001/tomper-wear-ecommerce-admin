@@ -1,4 +1,5 @@
 import {
+  CREATE_NEW_ADMIN,
   GET_ADMINS_BEGIN,
   GET_ADMINS_ERROR,
   GET_ADMINS_SUCCESS,
@@ -17,6 +18,10 @@ const product_reducer = (state, action) => {
       admins_loading: false,
       admins: action.payload,
     };
+  }
+  if (action.type === CREATE_NEW_ADMIN) {
+    const { name, value } = action.payload;
+    return { ...state, new_admin: { ...state.new_admin, [name]: value } };
   }
   throw new Error(`No Matching "${action.type}" - action type`);
 };
