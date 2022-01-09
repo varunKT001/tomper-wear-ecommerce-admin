@@ -4,6 +4,7 @@ import OrdersPage from './OrdersPage';
 import ProductsPage from './ProductsPage';
 import AdminsPage from './AdminsPage';
 import PrivateRoute from './PrivateRoute';
+import SingleOrderPage from './SingleOrderPage';
 
 export {
   Dashboard,
@@ -12,4 +13,5 @@ export {
   OrdersPage,
   ProductsPage,
   AdminsPage,
+  SingleOrderPage,
 };

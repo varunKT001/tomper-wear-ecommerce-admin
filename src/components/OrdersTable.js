@@ -1,6 +1,7 @@
 import React from 'react';
 import { formatPrice, getOrderStatusColor } from '../utils/helpers';
 import { BiChevronDown } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 import {
   Table,
   Thead,
@@ -19,9 +20,38 @@ import {
   VStack,
   Text,
   HStack,
+  useToast,
 } from '@chakra-ui/react';
+import { useOrderContext } from '../context/order_context';
+import { useHistory } from 'react-router-dom';
 
 function OrdersTable({ orders }) {
+  const toast = useToast();
+  const history = useHistory();
+  const { deleteOrder } = useOrderContext();
+
+  const handleDelete = async (id) => {
+    const response = await deleteOrder(id);
+    if (response.success) {
+      history.push('/orders');
+      return toast({
+        position: 'top',
+        description: response.message,
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    } else {
+      return toast({
+        position: 'top',
+        description: response.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <SimpleGrid bg='white' p={5} shadow='lg' borderRadius='lg'>
       <Table variant='simple'>
@@ -41,6 +71,7 @@ function OrdersTable({ orders }) {
               orderItems,
               paymentInfo: { status },
               orderStatus,
+              _id: id,
             } = order;
             return (
               <Tr key={index}>
@@ -82,8 +113,12 @@ function OrdersTable({ orders }) {
                       Actions
                     </MenuButton>
                     <MenuList>
-                      <MenuItem>VIEW</MenuItem>
-                      <MenuItem>DELETE</MenuItem>
+                      <Link to={`/orders/${id}`}>
+                        <MenuItem>VIEW</MenuItem>
+                      </Link>
+                      <MenuItem onClick={() => handleDelete(id)}>
+                        DELETE
+                      </MenuItem>
                     </MenuList>
                   </Menu>
                 </Td>

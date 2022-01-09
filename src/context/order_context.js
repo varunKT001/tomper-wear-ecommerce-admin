@@ -1,18 +1,30 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import reducer from '../reducers/order_reducer';
-import { orders_url } from '../utils/constants';
+import {
+  orders_url,
+  single_order_url,
+  update_order_status,
+} from '../utils/constants';
 import { getLocalStorage } from '../utils/helpers';
 import {
   GET_ORDERS_BEGIN,
   GET_ORDERS_ERROR,
   GET_ORDERS_SUCCESS,
+  GET_SINGLE_ORDER_BEGIN,
+  GET_SINGLE_ORDER_ERROR,
+  GET_SINGLE_ORDER_SUCCESS,
+  UPDATE_ORDER_STATUS,
 } from '../actions';
 
 const initialState = {
   orders_loading: false,
   orders_error: false,
   orders: [],
+  single_order_loading: false,
+  single_order_error: false,
+  single_order: {},
+  single_order_status: '',
   recent_orders: [],
   pending_orders: 0,
   delivered_orders: 0,
@@ -41,12 +53,74 @@ export const OrderProvider = ({ children }) => {
     }
   };
 
+  const fetchSingleOrder = async (id) => {
+    dispatch({ type: GET_SINGLE_ORDER_BEGIN });
+    try {
+      const token = getLocalStorage('token');
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.get(`${single_order_url}${id}`, {
+        headers,
+      });
+      const { data } = response.data;
+      dispatch({ type: GET_SINGLE_ORDER_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({ type: GET_SINGLE_ORDER_ERROR });
+    }
+  };
+
+  const updateOrderStatus = async (status, id) => {
+    try {
+      const token = getLocalStorage('token');
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.put(
+        `${update_order_status}${id}`,
+        {
+          status,
+        },
+        {
+          headers,
+        }
+      );
+      const { success, data } = response.data;
+      dispatch({ type: UPDATE_ORDER_STATUS, payload: data.orderStatus });
+      fetchOrders();
+      return { success, status: data.orderStatus };
+    } catch (error) {
+      const { success, message } = error.response.data;
+      return { success, message };
+    }
+  };
+
+  const deleteOrder = async (id) => {
+    try {
+      const token = getLocalStorage('token');
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.delete(`${update_order_status}${id}`, {
+        headers,
+      });
+      const { success, message } = response.data;
+      fetchOrders();
+      return { success, message };
+    } catch (error) {
+      const { success, message } = error.response.data;
+      return { success, message };
+    }
+  };
+
   useEffect(() => {
     fetchOrders();
   }, []);
 
   return (
-    <OrderContext.Provider value={{ ...state }}>
+    <OrderContext.Provider
+      value={{ ...state, fetchSingleOrder, updateOrderStatus, deleteOrder }}
+    >
       {children}
     </OrderContext.Provider>
   );

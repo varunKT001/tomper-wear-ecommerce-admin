@@ -14,6 +14,11 @@ export const formatPrice = (number) => {
   }).format(number / 100);
 };
 
+export const formatAddress = (data) => {
+  const { address, city, state, country, pinCode } = data;
+  return `${address}, ${city}, ${state} - ${pinCode}, ${country}`;
+};
+
 export const getOrderStatusColor = (status) => {
   if (status === 'processing') {
     return 'orange';

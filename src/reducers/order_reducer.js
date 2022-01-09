@@ -2,6 +2,10 @@ import {
   GET_ORDERS_BEGIN,
   GET_ORDERS_ERROR,
   GET_ORDERS_SUCCESS,
+  GET_SINGLE_ORDER_BEGIN,
+  GET_SINGLE_ORDER_ERROR,
+  GET_SINGLE_ORDER_SUCCESS,
+  UPDATE_ORDER_STATUS,
 } from '../actions';
 
 const order_reducer = (state, action) => {
@@ -38,6 +42,23 @@ const order_reducer = (state, action) => {
       total_revenue,
       recent_orders,
     };
+  }
+  if (action.type === GET_SINGLE_ORDER_BEGIN) {
+    return { ...state, single_order_error: false, single_order_loading: true };
+  }
+  if (action.type === GET_SINGLE_ORDER_ERROR) {
+    return { ...state, single_order_loading: false, single_order_error: true };
+  }
+  if (action.type === GET_SINGLE_ORDER_SUCCESS) {
+    return {
+      ...state,
+      single_order_loading: false,
+      single_order: action.payload,
+      single_order_status: action.payload.orderStatus,
+    };
+  }
+  if (action.type === UPDATE_ORDER_STATUS) {
+    return { ...state, single_order_status: action.payload };
   }
   throw new Error(`No Matching "${action.type}" - action type`);
 };

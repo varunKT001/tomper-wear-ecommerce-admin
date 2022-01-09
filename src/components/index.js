@@ -6,6 +6,8 @@ import DashboardCards from './DashboardCards';
 import OrdersTable from './OrdersTable';
 import ProductsTable from './ProductsTable';
 import AdminsTable from './AdminsTable';
+import OrderDetails from './OrderDetails';
+import OrderItemsList from './OrderItemsList';
 
 export {
   SidebarWithHeader,
@@ -16,4 +18,6 @@ export {
   OrdersTable,
   ProductsTable,
   AdminsTable,
+  OrderItemsList,
+  OrderDetails,
 };
