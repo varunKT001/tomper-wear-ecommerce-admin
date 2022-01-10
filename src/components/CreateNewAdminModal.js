@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -26,6 +26,7 @@ function CreateNewAdminModal() {
   } = useAdminContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+  const [loading, setLoading] = useState(false);
   const initialRef = useRef();
 
   const handleSubmit = async () => {
@@ -38,8 +39,10 @@ function CreateNewAdminModal() {
         isClosable: true,
       });
     }
+    setLoading(true);
     const response = await createNewAdmin();
     if (response.success) {
+      setLoading(false);
       onClose();
       return toast({
         position: 'top',
@@ -49,6 +52,7 @@ function CreateNewAdminModal() {
         isClosable: true,
       });
     } else {
+      setLoading(false);
       onClose();
       return toast({
         position: 'top',
@@ -116,7 +120,11 @@ function CreateNewAdminModal() {
             <Button mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme='brown' onClick={handleSubmit}>
+            <Button
+              isLoading={loading}
+              colorScheme='brown'
+              onClick={handleSubmit}
+            >
               Save
             </Button>
           </ModalFooter>

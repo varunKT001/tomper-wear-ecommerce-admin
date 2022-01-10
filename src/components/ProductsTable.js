@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BiChevronDown } from 'react-icons/bi';
 import { formatPrice } from '../utils/helpers';
+import { useProductContext } from '../context/product_context';
 import {
   Table,
   Thead,
@@ -16,68 +17,108 @@ import {
   MenuItem,
   SimpleGrid,
   VStack,
+  HStack,
+  Spinner,
   Text,
+  useToast,
 } from '@chakra-ui/react';
 
 function ProductsTable({ products }) {
+  const toast = useToast();
+  const { deleteProduct } = useProductContext();
+  const [loading, setLoading] = useState(false);
+
+  const handleDelete = async (id) => {
+    setLoading(true);
+    const response = await deleteProduct(id);
+    if (response.success) {
+      setLoading(false);
+      return toast({
+        position: 'top',
+        description: response.message,
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+    } else {
+      setLoading(false);
+      return toast({
+        position: 'top',
+        description: response.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <SimpleGrid bg='white' p={5} shadow='lg' borderRadius='lg'>
-      <Table variant='simple'>
-        <Thead>
-          <Tr>
-            <Th>Image</Th>
-            <Th>Name</Th>
-            <Th>Category</Th>
-            <Th>Stock</Th>
-            <Th></Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {products.map((product, index) => {
-            const { image, name, price, stock, category, company } = product;
-            return (
-              <Tr key={index}>
-                <Td>
-                  <Image
-                    src={image}
-                    boxSize='100px'
-                    objectFit='cover'
-                    borderRadius='lg'
-                  />
-                </Td>
-                <Td>
-                  <VStack alignItems='flex-start' spacing={1}>
-                    <Text as='b'>{name.substring(0, 21)}...</Text>
-                    <Text fontSize='sm' color='green.500'>
-                      {formatPrice(price)}
-                    </Text>
-                  </VStack>
-                </Td>
-                <Td>
-                  <VStack alignItems='flex-start' spacing={1}>
-                    <Text as='b'>{category.toUpperCase()}</Text>
-                    <Text fontSize='sm' color='brown.500'>
-                      {company}
-                    </Text>
-                  </VStack>
-                </Td>
-                <Td>{stock}</Td>
-                <Td>
-                  <Menu>
-                    <MenuButton as={Button} rightIcon={<BiChevronDown />}>
-                      Actions
-                    </MenuButton>
-                    <MenuList>
-                      <MenuItem>EDIT</MenuItem>
-                      <MenuItem>DELETE</MenuItem>
-                    </MenuList>
-                  </Menu>
-                </Td>
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
+      {loading ? (
+        <HStack my={8} alignItems='center' justifyContent='center'>
+          <Spinner size='lg' color='brown.500' />
+        </HStack>
+      ) : (
+        <Table variant='simple'>
+          <Thead>
+            <Tr>
+              <Th>Image</Th>
+              <Th>Name</Th>
+              <Th>Category</Th>
+              <Th>Stock</Th>
+              <Th></Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {products.map((product, index) => {
+              const { image, name, price, stock, category, company, id } =
+                product;
+              return (
+                <Tr key={index}>
+                  <Td>
+                    <Image
+                      src={image}
+                      boxSize='100px'
+                      objectFit='cover'
+                      borderRadius='lg'
+                    />
+                  </Td>
+                  <Td>
+                    <VStack alignItems='flex-start' spacing={1}>
+                      <Text as='b'>{name.substring(0, 21)}...</Text>
+                      <Text fontSize='sm' color='green.500'>
+                        {formatPrice(price)}
+                      </Text>
+                    </VStack>
+                  </Td>
+                  <Td>
+                    <VStack alignItems='flex-start' spacing={1}>
+                      <Text as='b'>{category.toUpperCase()}</Text>
+                      <Text fontSize='sm' color='brown.500'>
+                        {company}
+                      </Text>
+                    </VStack>
+                  </Td>
+                  <Td>{stock}</Td>
+                  <Td>
+                    <Menu>
+                      <MenuButton as={Button} rightIcon={<BiChevronDown />}>
+                        Actions
+                      </MenuButton>
+                      <MenuList>
+                        <MenuItem>EDIT</MenuItem>
+                        <MenuItem onClick={() => handleDelete(id)}>
+                          DELETE
+                        </MenuItem>
+                      </MenuList>
+                    </Menu>
+                  </Td>
+                </Tr>
+              );
+            })}
+          </Tbody>
+        </Table>
+      )}
     </SimpleGrid>
   );
 }

@@ -10,7 +10,7 @@ import {
   Badge,
   Button,
   SimpleGrid,
-  ButtonGroup,
+  Spinner,
   Select,
   useToast,
   HStack,
@@ -20,11 +20,14 @@ import { useAdminContext } from '../context/admin_context';
 function AdminsTable({ admins }) {
   const toast = useToast();
   const { updateAdminPrivilege, deleteAdmin } = useAdminContext();
+  const [loading, setLoading] = useState(false);
 
   const handleEdit = async (e, id) => {
+    setLoading(true);
     const privilege = e.target.value;
     const response = await updateAdminPrivilege(id, privilege);
     if (response.success) {
+      setLoading(false);
       const { name, privilege } = response.data;
       return toast({
         position: 'top',
@@ -34,6 +37,7 @@ function AdminsTable({ admins }) {
         isClosable: true,
       });
     } else {
+      setLoading(false);
       return toast({
         position: 'top',
         description: response.message,
@@ -45,8 +49,10 @@ function AdminsTable({ admins }) {
   };
 
   const handleDelete = async (id) => {
+    setLoading(true);
     const response = await deleteAdmin(id);
     if (response.success) {
+      setLoading(false);
       return toast({
         position: 'top',
         description: response.message,
@@ -55,6 +61,7 @@ function AdminsTable({ admins }) {
         isClosable: true,
       });
     } else {
+      setLoading(false);
       return toast({
         position: 'top',
         description: response.message,
@@ -67,51 +74,57 @@ function AdminsTable({ admins }) {
 
   return (
     <SimpleGrid bg='white' p={5} shadow='lg' borderRadius='lg'>
-      <Table variant='simple'>
-        <Thead>
-          <Tr>
-            <Th>Name</Th>
-            <Th>Email</Th>
-            <Th>Privilege</Th>
-            <Th></Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {admins.map((admin, index) => {
-            const { name, email, privilege, id: adminId } = admin;
-            return (
-              <Tr key={index}>
-                <Td>{name}</Td>
-                <Td>{email}</Td>
-                <Td>
-                  <Badge colorScheme={getAdminPrivilegeColor(privilege)}>
-                    {privilege}
-                  </Badge>
-                </Td>
-                <Td>
-                  <HStack spacing='5'>
-                    <Select
-                      maxW={125}
-                      value={privilege}
-                      onChange={(e) => handleEdit(e, adminId)}
-                    >
-                      <option value='super'>Super</option>
-                      <option value='moderate'>Moderate</option>
-                      <option value='low'>Low</option>
-                    </Select>
-                    <Button
-                      colorScheme='red'
-                      onClick={() => handleDelete(adminId)}
-                    >
-                      DELETE
-                    </Button>
-                  </HStack>
-                </Td>
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
+      {loading ? (
+        <HStack my={8} alignItems='center' justifyContent='center'>
+          <Spinner size='lg' color='brown.500' />
+        </HStack>
+      ) : (
+        <Table variant='simple'>
+          <Thead>
+            <Tr>
+              <Th>Name</Th>
+              <Th>Email</Th>
+              <Th>Privilege</Th>
+              <Th></Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {admins.map((admin, index) => {
+              const { name, email, privilege, id: adminId } = admin;
+              return (
+                <Tr key={index}>
+                  <Td>{name}</Td>
+                  <Td>{email}</Td>
+                  <Td>
+                    <Badge colorScheme={getAdminPrivilegeColor(privilege)}>
+                      {privilege}
+                    </Badge>
+                  </Td>
+                  <Td>
+                    <HStack spacing='5'>
+                      <Select
+                        maxW={125}
+                        value={privilege}
+                        onChange={(e) => handleEdit(e, adminId)}
+                      >
+                        <option value='super'>Super</option>
+                        <option value='moderate'>Moderate</option>
+                        <option value='low'>Low</option>
+                      </Select>
+                      <Button
+                        colorScheme='red'
+                        onClick={() => handleDelete(adminId)}
+                      >
+                        DELETE
+                      </Button>
+                    </HStack>
+                  </Td>
+                </Tr>
+              );
+            })}
+          </Tbody>
+        </Table>
+      )}
     </SimpleGrid>
   );
 }

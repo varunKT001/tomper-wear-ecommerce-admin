@@ -1,7 +1,9 @@
 import {
+  CREATE_NEW_PRODUCT,
   GET_PRODUCTS_BEGIN,
   GET_PRODUCTS_ERROR,
   GET_PRODUCTS_SUCCESS,
+  UPDATE_NEW_PRODUCT_IMAGES,
 } from '../actions';
 
 const product_reducer = (state, action) => {
@@ -17,6 +19,16 @@ const product_reducer = (state, action) => {
       products_loading: false,
       products: action.payload,
     };
+  }
+  if (action.type === UPDATE_NEW_PRODUCT_IMAGES) {
+    return {
+      ...state,
+      new_product: { ...state.new_product, images: action.payload },
+    };
+  }
+  if (action.type === CREATE_NEW_PRODUCT) {
+    const { name, value } = action.payload;
+    return { ...state, new_product: { ...state.new_product, [name]: value } };
   }
   throw new Error(`No Matching "${action.type}" - action type`);
 };

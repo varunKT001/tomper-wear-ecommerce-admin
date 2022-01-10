@@ -9,6 +9,7 @@ import AdminsTable from './AdminsTable';
 import OrderDetails from './OrderDetails';
 import OrderItemsList from './OrderItemsList';
 import CreateNewAdminModal from './CreateNewAdminModal';
+import CreateNewProductModal from './CreateNewProductModal';
 
 export {
   SidebarWithHeader,
@@ -22,4 +23,5 @@ export {
   OrderItemsList,
   OrderDetails,
   CreateNewAdminModal,
+  CreateNewProductModal,
 };
