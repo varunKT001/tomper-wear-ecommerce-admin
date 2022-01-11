@@ -10,6 +10,7 @@ import OrderDetails from './OrderDetails';
 import OrderItemsList from './OrderItemsList';
 import CreateNewAdminModal from './CreateNewAdminModal';
 import CreateNewProductModal from './CreateNewProductModal';
+import UpdateProductModal from './UpdateProductModal';
 
 export {
   SidebarWithHeader,
@@ -24,4 +25,5 @@ export {
   OrderDetails,
   CreateNewAdminModal,
   CreateNewProductModal,
+  UpdateProductModal,
 };

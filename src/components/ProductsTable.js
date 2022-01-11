@@ -22,6 +22,7 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
+import UpdateProductModal from './UpdateProductModal';
 
 function ProductsTable({ products }) {
   const toast = useToast();
@@ -106,7 +107,9 @@ function ProductsTable({ products }) {
                         Actions
                       </MenuButton>
                       <MenuList>
-                        <MenuItem>EDIT</MenuItem>
+                        <MenuItem>
+                          <UpdateProductModal id={id}/>
+                        </MenuItem>
                         <MenuItem onClick={() => handleDelete(id)}>
                           DELETE
                         </MenuItem>

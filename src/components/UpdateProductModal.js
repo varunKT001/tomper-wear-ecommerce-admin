@@ -20,26 +20,28 @@ import {
   Image,
   VStack,
   Checkbox,
+  Text,
 } from '@chakra-ui/react';
 import { useDropzone } from 'react-dropzone';
 import { useProductContext } from '../context/product_context';
 
-function CreateNewProductModal() {
+function UpdateProductModal({ id }) {
   const {
-    new_product: {
-      name,
-      price,
-      stock,
-      description,
-      colors,
-      sizes,
-      category,
-      company,
-      shipping,
-      featured,
+    single_product: {
+      name = '',
+      price = '',
+      stock = 0,
+      description = '',
+      colors = [],
+      sizes = [],
+      category = '',
+      company = '',
+      shipping = false,
+      featured = false,
     },
-    updateNewProductDetails,
-    createNewProduct,
+    fetchSingleProduct,
+    updateExistingProductDetails,
+    updateProduct,
   } = useProductContext();
 
   const [imageList, setImageList] = useState([]);
@@ -98,13 +100,13 @@ function CreateNewProductModal() {
       featured,
       images: imageList,
     };
-    const responseCreate = await createNewProduct(product);
+    const responseCreate = await updateProduct(id, product);
     if (responseCreate.success) {
       setLoading(false);
       onClose();
       return toast({
         position: 'top',
-        description: 'Product created',
+        description: 'Product updated',
         status: 'success',
         duration: 5000,
         isClosable: true,
@@ -123,9 +125,16 @@ function CreateNewProductModal() {
 
   return (
     <>
-      <Button colorScheme='brown' onClick={onOpen}>
-        CREATE NEW PRODUCT
-      </Button>
+      <Text
+        colorScheme='brown'
+        minW='100%'
+        onClick={() => {
+          fetchSingleProduct(id);
+          onOpen();
+        }}
+      >
+        EDIT
+      </Text>
 
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -140,7 +149,7 @@ function CreateNewProductModal() {
                 placeholder='Product Name'
                 name='name'
                 value={name}
-                onChange={updateNewProductDetails}
+                onChange={updateExistingProductDetails}
               />
             </FormControl>
 
@@ -151,7 +160,7 @@ function CreateNewProductModal() {
                 placeholder='Product Price'
                 name='price'
                 value={price}
-                onChange={updateNewProductDetails}
+                onChange={updateExistingProductDetails}
               />
             </FormControl>
 
@@ -162,7 +171,7 @@ function CreateNewProductModal() {
                 placeholder='Product Stock'
                 name='stock'
                 value={stock}
-                onChange={updateNewProductDetails}
+                onChange={updateExistingProductDetails}
               />
             </FormControl>
 
@@ -172,7 +181,7 @@ function CreateNewProductModal() {
                 placeholder='Product Description'
                 name='description'
                 value={description}
-                onChange={updateNewProductDetails}
+                onChange={updateExistingProductDetails}
               />
             </FormControl>
 
@@ -182,7 +191,7 @@ function CreateNewProductModal() {
                 placeholder='Product Category'
                 name='category'
                 value={category}
-                onChange={updateNewProductDetails}
+                onChange={updateExistingProductDetails}
               />
             </FormControl>
 
@@ -192,7 +201,7 @@ function CreateNewProductModal() {
                 placeholder='Product Company'
                 name='company'
                 value={company}
-                onChange={updateNewProductDetails}
+                onChange={updateExistingProductDetails}
               />
             </FormControl>
 
@@ -202,7 +211,7 @@ function CreateNewProductModal() {
                 placeholder='Product Sizes (comma separated)'
                 name='sizes'
                 value={sizes}
-                onChange={updateNewProductDetails}
+                onChange={updateExistingProductDetails}
               />
               <FormHelperText>Eg: m, l, xl, xxl, xxxl</FormHelperText>
             </FormControl>
@@ -213,7 +222,7 @@ function CreateNewProductModal() {
                 placeholder='Product Colors (comma separated)'
                 name='colors'
                 value={colors}
-                onChange={updateNewProductDetails}
+                onChange={updateExistingProductDetails}
               />
               <FormHelperText>Eg: red,green,blue</FormHelperText>
               <FormHelperText>Eg: #FF000,#00FF00,#0000FF</FormHelperText>
@@ -272,7 +281,7 @@ function CreateNewProductModal() {
               <Checkbox
                 name='shipping'
                 isChecked={shipping}
-                onChange={updateNewProductDetails}
+                onChange={updateExistingProductDetails}
               >
                 Shipping
               </Checkbox>
@@ -282,7 +291,7 @@ function CreateNewProductModal() {
               <Checkbox
                 name='featured'
                 isChecked={featured}
-                onChange={updateNewProductDetails}
+                onChange={updateExistingProductDetails}
               >
                 Featured
               </Checkbox>
@@ -295,7 +304,7 @@ function CreateNewProductModal() {
             </Button>
             <Button
               isLoading={loading}
-              loadingText='Creating Product'
+              loadingText='Updating Product'
               colorScheme='brown'
               onClick={handleSubmit}
             >
@@ -308,4 +317,4 @@ function CreateNewProductModal() {
   );
 }
 
-export default CreateNewProductModal;
+export default UpdateProductModal;
