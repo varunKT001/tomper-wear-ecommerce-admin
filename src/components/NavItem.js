@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Icon, Link as ChakraLink } from '@chakra-ui/react';
+import { Flex, Icon } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 export default function NavItem({ url, icon, children, ...rest }) {

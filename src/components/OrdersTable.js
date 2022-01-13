@@ -24,11 +24,9 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useOrderContext } from '../context/order_context';
-import { useHistory } from 'react-router-dom';
 
 function OrdersTable({ orders }) {
   const toast = useToast();
-  const history = useHistory();
   const { deleteOrder } = useOrderContext();
   const [loading, setLoading] = useState(false);
 

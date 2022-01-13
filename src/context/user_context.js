@@ -17,7 +17,7 @@ export const UserProvider = ({ children }) => {
     try {
       const token = getLocalStorage('token');
       const response = await axios.post(auth_url, { token });
-      const { success, data, token: authToken } = response.data;
+      const { data, token: authToken } = response.data;
       setUser(data, authToken);
     } catch (error) {
       console.log(error.response);
@@ -43,6 +43,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     checkAuth();
+    // eslint-disable-next-line
   }, []);
 
   return (

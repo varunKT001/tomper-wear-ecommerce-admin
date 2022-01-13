@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useReducer, useCallback } from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import reducer from '../reducers/product_reducer';
 import {
   products_url,
   update_product_url,
-  upload_images,
   create_new_product,
 } from '../utils/constants';
 import { getLocalStorage } from '../utils/helpers';

@@ -31,6 +31,7 @@ export default function SidebarContent({ onClose, ...rest }) {
       );
       setLinks(tempLinks);
     }
+    // eslint-disable-next-line
   }, []);
 
   return (

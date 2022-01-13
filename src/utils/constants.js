@@ -31,5 +31,4 @@ export const products_url = `${domain}/api/products/`;
 export const admins_url = `${domain}/api/admin/users/`;
 export const single_order_url = `${domain}/api/orders/`;
 export const update_order_status = `${domain}/api/admin/order/`;
-export const upload_images = `${domain}/api/admin/product/upload`;
 export const create_new_product = `${domain}/api/admin/product/new`;

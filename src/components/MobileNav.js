@@ -22,13 +22,13 @@ import { FiMenu, FiChevronDown } from 'react-icons/fi';
 
 export default function MobileNav({ onOpen, ...rest }) {
   const {
-    currentUser: { name, email },
+    currentUser: { name },
     logout,
   } = useUserContext();
   const toast = useToast();
 
   const handleSubmit = () => {
-    const { success, message } = logout();
+    const { message } = logout();
     return toast({
       position: 'top',
       description: message,

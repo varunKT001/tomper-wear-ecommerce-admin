@@ -50,6 +50,7 @@ function SingleOrderPage() {
 
   useEffect(() => {
     fetchSingleOrder(id);
+    // eslint-disable-next-line
   }, [id]);
 
   useEffect(() => {

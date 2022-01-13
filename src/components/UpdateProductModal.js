@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import {
   Button,
   Input,
@@ -36,15 +36,17 @@ function UpdateProductModal({ id }) {
       sizes = [],
       category = '',
       company = '',
+      images = [],
       shipping = false,
       featured = false,
     },
+    single_product_loading,
     fetchSingleProduct,
     updateExistingProductDetails,
     updateProduct,
   } = useProductContext();
 
-  const [imageList, setImageList] = useState([]);
+  const [imageList, setImageList] = useState(images);
   const [loading, setLoading] = useState(false);
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -86,7 +88,6 @@ function UpdateProductModal({ id }) {
       });
     }
     setLoading(true);
-    console.log('uploading');
     const product = {
       name,
       price,
@@ -122,6 +123,11 @@ function UpdateProductModal({ id }) {
       });
     }
   };
+
+  useEffect(() => {
+    setImageList(images);
+    // eslint-disable-next-line
+  }, [single_product_loading]);
 
   return (
     <>
@@ -259,7 +265,7 @@ function UpdateProductModal({ id }) {
                   return (
                     <VStack key={index} spacing={3}>
                       <Image
-                        src={image}
+                        src={image?.url ? image.url : image}
                         boxSize='70px'
                         objectFit='cover'
                         borderRadius='lg'
