@@ -5,6 +5,7 @@ import {
   products_url,
   update_product_url,
   create_new_product,
+  delete_review,
 } from '../utils/constants';
 import { getLocalStorage } from '../utils/helpers';
 import {
@@ -173,6 +174,27 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+  const deleteReview = async (productId, reviewId) => {
+    try {
+      const token = getLocalStorage('token');
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const response = await axios.delete(`${delete_review}${productId}`, {
+        headers,
+        data: {
+          reviewId,
+        },
+      });
+      const { success, message } = response.data;
+      fetchSingleProduct(productId);
+      return { success, message };
+    } catch (error) {
+      const { success, message } = error.response.data;
+      return { success, message };
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -187,6 +209,7 @@ export const ProductProvider = ({ children }) => {
         createNewProduct,
         fetchSingleProduct,
         updateProduct,
+        deleteReview,
       }}
     >
       {children}

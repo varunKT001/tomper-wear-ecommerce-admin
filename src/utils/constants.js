@@ -32,3 +32,4 @@ export const admins_url = `${domain}/api/admin/users/`;
 export const single_order_url = `${domain}/api/orders/`;
 export const update_order_status = `${domain}/api/admin/order/`;
 export const create_new_product = `${domain}/api/admin/product/new`;
+export const delete_review = `${domain}/api/admin/product/review/`;

@@ -11,6 +11,11 @@ import OrderItemsList from './OrderItemsList';
 import CreateNewAdminModal from './CreateNewAdminModal';
 import CreateNewProductModal from './CreateNewProductModal';
 import UpdateProductModal from './UpdateProductModal';
+import ErrorBoundary from './ErrorBoundary';
+import ImagesList from './ImagesList';
+import SingleProductInfo from './SingleProductInfo';
+import Stars from './Stars';
+import SingleProductReviews from './SingleProductReviews';
 
 export {
   SidebarWithHeader,
@@ -26,4 +31,9 @@ export {
   CreateNewAdminModal,
   CreateNewProductModal,
   UpdateProductModal,
+  ErrorBoundary,
+  ImagesList,
+  SingleProductInfo,
+  Stars,
+  SingleProductReviews,
 };

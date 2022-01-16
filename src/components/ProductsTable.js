@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BiChevronDown } from 'react-icons/bi';
 import { formatPrice } from '../utils/helpers';
 import { useProductContext } from '../context/product_context';
+import { Link } from 'react-router-dom';
 import {
   Table,
   Thead,
@@ -107,8 +108,11 @@ function ProductsTable({ products }) {
                         Actions
                       </MenuButton>
                       <MenuList>
+                        <Link to={`/products/${id}`}>
+                          <MenuItem>VIEW</MenuItem>
+                        </Link>
                         <MenuItem>
-                          <UpdateProductModal id={id}/>
+                          <UpdateProductModal id={id} />
                         </MenuItem>
                         <MenuItem onClick={() => handleDelete(id)}>
                           DELETE

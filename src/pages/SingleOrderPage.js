@@ -98,7 +98,7 @@ function SingleOrderPage() {
 
   return (
     <SidebarWithHeader>
-      <HStack bg='white' p={5} mb={5} shadow='lg' borderRadius='lg'>
+      <HStack bg='white' p={5} mb={5} shadow='sm' borderRadius='lg'>
         <Text>STATUS: </Text>
         <Select
           variant='filled'
@@ -120,7 +120,7 @@ function SingleOrderPage() {
         p={5}
         bg='white'
         alignItems='flex-start'
-        shadow='lg'
+        shadow='sm'
         borderRadius='lg'
       >
         <OrderDetails {...order} order_status={single_order_status} />

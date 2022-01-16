@@ -8,6 +8,7 @@ import {
   PrivateRoute,
   ProductsPage,
   SingleOrderPage,
+  SingleProductPage,
 } from './pages';
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
         </PrivateRoute>
         <PrivateRoute exact path='/products'>
           <ProductsPage />
+        </PrivateRoute>
+        <PrivateRoute exact path='/products/:id'>
+          <SingleProductPage />
         </PrivateRoute>
         <PrivateRoute exact path='/admins'>
           <AdminsPage />
