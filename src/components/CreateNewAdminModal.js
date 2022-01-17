@@ -41,8 +41,8 @@ function CreateNewAdminModal() {
     }
     setLoading(true);
     const response = await createNewAdmin();
+    setLoading(false);
     if (response.success) {
-      setLoading(false);
       onClose();
       return toast({
         position: 'top',
@@ -52,7 +52,6 @@ function CreateNewAdminModal() {
         isClosable: true,
       });
     } else {
-      setLoading(false);
       onClose();
       return toast({
         position: 'top',

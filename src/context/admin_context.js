@@ -18,7 +18,7 @@ const initialState = {
     name: '',
     email: '',
     password: '',
-    privilege: '',
+    privilege: 'super',
   },
 };
 
