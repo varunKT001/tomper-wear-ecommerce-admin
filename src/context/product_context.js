@@ -7,7 +7,6 @@ import {
   create_new_product,
   delete_review,
 } from '../utils/constants';
-import { getLocalStorage } from '../utils/helpers';
 import {
   CREATE_NEW_PRODUCT,
   GET_PRODUCTS_BEGIN,
@@ -49,13 +48,7 @@ export const ProductProvider = ({ children }) => {
   const fetchProducts = async () => {
     dispatch({ type: GET_PRODUCTS_BEGIN });
     try {
-      const token = getLocalStorage('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.get(products_url, {
-        headers,
-      });
+      const response = await axios.get(products_url);
       const { data } = response.data;
       dispatch({ type: GET_PRODUCTS_SUCCESS, payload: data });
     } catch (error) {
@@ -66,13 +59,7 @@ export const ProductProvider = ({ children }) => {
   const fetchSingleProduct = async (id) => {
     dispatch({ type: GET_SINGLE_PRODUCT_BEGIN });
     try {
-      const token = getLocalStorage('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.get(`${products_url}${id}`, {
-        headers,
-      });
+      const response = await axios.get(`${products_url}${id}`);
       const { data } = response.data;
       dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: data });
     } catch (error) {
@@ -82,13 +69,7 @@ export const ProductProvider = ({ children }) => {
 
   const deleteProduct = async (id) => {
     try {
-      const token = getLocalStorage('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.delete(`${update_product_url}${id}`, {
-        headers,
-      });
+      const response = await axios.delete(`${update_product_url}${id}`);
       const { success, message } = response.data;
       fetchProducts();
       return { success, message };
@@ -140,13 +121,7 @@ export const ProductProvider = ({ children }) => {
 
   const createNewProduct = async (product) => {
     try {
-      const token = getLocalStorage('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.post(create_new_product, product, {
-        headers,
-      });
+      const response = await axios.post(create_new_product, product);
       const { success, data } = response.data;
       fetchProducts();
       return { success, data };
@@ -158,13 +133,7 @@ export const ProductProvider = ({ children }) => {
 
   const updateProduct = async (id, product) => {
     try {
-      const token = getLocalStorage('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.put(`${update_product_url}${id}`, product, {
-        headers,
-      });
+      const response = await axios.put(`${update_product_url}${id}`, product);
       const { success, message } = response.data;
       fetchProducts();
       return { success, message };
@@ -176,12 +145,7 @@ export const ProductProvider = ({ children }) => {
 
   const deleteReview = async (productId, reviewId) => {
     try {
-      const token = getLocalStorage('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
       const response = await axios.delete(`${delete_review}${productId}`, {
-        headers,
         data: {
           reviewId,
         },

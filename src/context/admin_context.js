@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import reducer from '../reducers/admin_reducer';
+import { useUserContext } from '../context/user_context';
 import { admins_url, register_url } from '../utils/constants';
-import { getLocalStorage } from '../utils/helpers';
 import {
   GET_ADMINS_BEGIN,
   GET_ADMINS_ERROR,
@@ -25,18 +25,13 @@ const initialState = {
 const AdminContext = React.createContext();
 
 export const AdminProvider = ({ children }) => {
+  const { currentUser } = useUserContext();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const fetchAdmins = async () => {
     dispatch({ type: GET_ADMINS_BEGIN });
     try {
-      const token = getLocalStorage('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.get(admins_url, {
-        headers,
-      });
+      const response = await axios.get(admins_url);
       const { data } = response.data;
       dispatch({ type: GET_ADMINS_SUCCESS, payload: data });
     } catch (error) {
@@ -46,17 +41,7 @@ export const AdminProvider = ({ children }) => {
 
   const updateAdminPrivilege = async (id, privilege) => {
     try {
-      const token = getLocalStorage('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.put(
-        `${admins_url}${id}`,
-        { privilege },
-        {
-          headers,
-        }
-      );
+      const response = await axios.put(`${admins_url}${id}`, { privilege });
       const { success, data } = response.data;
       fetchAdmins();
       return { success, data };
@@ -68,13 +53,7 @@ export const AdminProvider = ({ children }) => {
 
   const deleteAdmin = async (id) => {
     try {
-      const token = getLocalStorage('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.delete(`${admins_url}${id}`, {
-        headers,
-      });
+      const response = await axios.delete(`${admins_url}${id}`);
       const { success, message } = response.data;
       fetchAdmins();
       return { success, message };
@@ -93,13 +72,7 @@ export const AdminProvider = ({ children }) => {
   const createNewAdmin = async () => {
     const { new_admin } = state;
     try {
-      const token = getLocalStorage('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.post(register_url, new_admin, {
-        headers,
-      });
+      const response = await axios.post(register_url, new_admin);
       const { success, data } = response.data;
       fetchAdmins();
       return { success, data };
@@ -111,7 +84,7 @@ export const AdminProvider = ({ children }) => {
 
   useEffect(() => {
     fetchAdmins();
-  }, []);
+  }, [currentUser]);
 
   return (
     <AdminContext.Provider

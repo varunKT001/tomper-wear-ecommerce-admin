@@ -21,10 +21,12 @@ export const orderStatusList = [
   { name: 'Delivered', value: 'delivered' },
 ];
 
-export const domain = 'https://tomper-wear-server.herokuapp.com';
+// export const domain = 'https://tomper-wear-server.herokuapp.com';
+export const domain = 'http://localhost:5000';
 export const auth_url = `${domain}/api/admin/auth`;
 export const login_url = `${domain}/api/admin/login`;
 export const register_url = `${domain}/api/admin/register`;
+export const logout_url = `${domain}/api/admin/logout`;
 export const orders_url = `${domain}/api/admin/orders`;
 export const update_product_url = `${domain}/api/admin/product/`;
 export const products_url = `${domain}/api/products/`;

@@ -27,8 +27,8 @@ export default function MobileNav({ onOpen, ...rest }) {
   } = useUserContext();
   const toast = useToast();
 
-  const handleSubmit = () => {
-    const { message } = logout();
+  const handleSubmit = async () => {
+    const { message } = await logout();
     return toast({
       position: 'top',
       description: message,

@@ -1,24 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import { login_url, auth_url } from '../utils/constants';
-import { getLocalStorage, setLocalStorage } from '../utils/helpers';
+import { login_url, auth_url, logout_url } from '../utils/constants';
+
+axios.defaults.withCredentials = true;
 
 const UserContext = React.createContext();
 
 export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
-  const setUser = (user, token) => {
+  const setUser = (user) => {
     setCurrentUser(user);
-    setLocalStorage('token', token);
   };
 
   const checkAuth = async () => {
     try {
-      const token = getLocalStorage('token');
-      const response = await axios.post(auth_url, { token });
-      const { data, token: authToken } = response.data;
-      setUser(data, authToken);
+      const response = await axios.post(auth_url);
+      const { data } = response.data;
+      setUser(data);
     } catch (error) {
       console.log(error.response);
     }
@@ -27,8 +26,8 @@ export const UserProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await axios.post(login_url, { email, password });
-      const { success, data, token } = response.data;
-      setUser(data, token);
+      const { success, data } = response.data;
+      setUser(data);
       return { success, data };
     } catch (error) {
       const { message, success } = error.response.data;
@@ -36,9 +35,16 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    setUser(null, null);
-    return { success: true, message: 'Logged Out' };
+  const logout = async () => {
+    try {
+      const response = await axios.get(logout_url);
+      const { success, message } = response.data;
+      setUser(null);
+      return { success, message };
+    } catch (error) {
+      const { success, message } = error.response.data;
+      return { success, message };
+    }
   };
 
   useEffect(() => {

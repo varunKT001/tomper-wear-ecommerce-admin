@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import reducer from '../reducers/order_reducer';
+import { useUserContext } from './user_context';
 import {
   orders_url,
   single_order_url,
   update_order_status,
 } from '../utils/constants';
-import { getLocalStorage } from '../utils/helpers';
 import {
   GET_ORDERS_BEGIN,
   GET_ORDERS_ERROR,
@@ -34,18 +34,13 @@ const initialState = {
 const OrderContext = React.createContext();
 
 export const OrderProvider = ({ children }) => {
+  const { currentUser } = useUserContext();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const fetchOrders = async () => {
     dispatch({ type: GET_ORDERS_BEGIN });
     try {
-      const token = getLocalStorage('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.get(orders_url, {
-        headers,
-      });
+      const response = await axios.get(orders_url);
       const { data } = response.data;
       dispatch({ type: GET_ORDERS_SUCCESS, payload: data });
     } catch (error) {
@@ -56,13 +51,7 @@ export const OrderProvider = ({ children }) => {
   const fetchSingleOrder = async (id) => {
     dispatch({ type: GET_SINGLE_ORDER_BEGIN });
     try {
-      const token = getLocalStorage('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.get(`${single_order_url}${id}`, {
-        headers,
-      });
+      const response = await axios.get(`${single_order_url}${id}`);
       const { data } = response.data;
       dispatch({ type: GET_SINGLE_ORDER_SUCCESS, payload: data });
     } catch (error) {
@@ -72,19 +61,9 @@ export const OrderProvider = ({ children }) => {
 
   const updateOrderStatus = async (status, id) => {
     try {
-      const token = getLocalStorage('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.put(
-        `${update_order_status}${id}`,
-        {
-          status,
-        },
-        {
-          headers,
-        }
-      );
+      const response = await axios.put(`${update_order_status}${id}`, {
+        status,
+      });
       const { success, data } = response.data;
       dispatch({ type: UPDATE_ORDER_STATUS, payload: data.orderStatus });
       fetchOrders();
@@ -97,13 +76,7 @@ export const OrderProvider = ({ children }) => {
 
   const deleteOrder = async (id) => {
     try {
-      const token = getLocalStorage('token');
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-      const response = await axios.delete(`${update_order_status}${id}`, {
-        headers,
-      });
+      const response = await axios.delete(`${update_order_status}${id}`);
       const { success, message } = response.data;
       fetchOrders();
       return { success, message };
@@ -115,7 +88,7 @@ export const OrderProvider = ({ children }) => {
 
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [currentUser]);
 
   return (
     <OrderContext.Provider
