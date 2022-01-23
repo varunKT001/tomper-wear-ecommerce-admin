@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   VStack,
-  HStack,
   Text,
   Button,
   Flex,
@@ -9,6 +8,7 @@ import {
   StackDivider,
   useToast,
   Spinner,
+  Stack,
 } from '@chakra-ui/react';
 import { MdAlternateEmail, MdDelete } from 'react-icons/md';
 import { Stars } from '.';
@@ -51,11 +51,15 @@ function SingleProductReviews({ reviews, productId }) {
           {reviews.map((review, index) => {
             const { rating, comment, name, email, _id: id } = review;
             return (
-              <Flex key={index} w='100%'>
+              <Flex
+                key={index}
+                w='100%'
+                flexDirection={{ base: 'column', sm: 'row' }}
+              >
                 <VStack alignItems='flex-start'>
                   <Stars stars={rating} />
                   <Text>{comment}</Text>
-                  <HStack>
+                  <Stack direction={{ base: 'column', sm: 'row' }}>
                     <Text as='b' color='brown.500'>
                       {name}
                     </Text>
@@ -68,7 +72,7 @@ function SingleProductReviews({ reviews, productId }) {
                     >
                       {email}
                     </Text>
-                  </HStack>
+                  </Stack>
                 </VStack>
                 <Spacer />
                 <Button

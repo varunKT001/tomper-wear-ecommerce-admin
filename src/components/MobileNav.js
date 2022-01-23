@@ -11,7 +11,6 @@ import {
   Text,
   Menu,
   MenuButton,
-  MenuDivider,
   MenuItem,
   MenuList,
   useToast,
@@ -94,8 +93,6 @@ export default function MobileNav({ onOpen, ...rest }) {
               bg={useColorModeValue('white', 'gray.900')}
               borderColor={useColorModeValue('gray.200', 'gray.700')}
             >
-              <MenuItem>Profile</MenuItem>
-              <MenuDivider />
               <MenuItem onClick={handleSubmit}>Sign out</MenuItem>
             </MenuList>
           </Menu>

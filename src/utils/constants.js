@@ -21,7 +21,7 @@ export const orderStatusList = [
   { name: 'Delivered', value: 'delivered' },
 ];
 
-export const domain = 'https://tomper-wear-server.herokuapp.com';
+export const domain = process.env.REACT_APP_BACKEND_HOST;
 export const auth_url = `${domain}/api/admin/auth`;
 export const login_url = `${domain}/api/admin/login`;
 export const register_url = `${domain}/api/admin/register`;

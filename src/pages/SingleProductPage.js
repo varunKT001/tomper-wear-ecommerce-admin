@@ -7,7 +7,7 @@ import {
   SingleProductReviews,
 } from '../components';
 import { useProductContext } from '../context/product_context';
-import { VStack, HStack, Heading, Spinner } from '@chakra-ui/react';
+import { VStack, Heading, Spinner, Stack } from '@chakra-ui/react';
 
 function SingleProductPage() {
   const { id } = useParams();
@@ -46,7 +46,8 @@ function SingleProductPage() {
   const { images, reviews = [] } = product;
   return (
     <SidebarWithHeader>
-      <HStack
+      <Stack
+        direction={{ base: 'column', sm: 'row' }}
         spacing='8'
         alignItems='flex-start'
         bg='white'
@@ -54,10 +55,11 @@ function SingleProductPage() {
         mb={4}
         borderRadius='lg'
         shadow='sm'
+        overflowX='auto'
       >
         <ImagesList images={images} />
         <SingleProductInfo product={product} />
-      </HStack>
+      </Stack>
       {reviews.length > 0 && (
         <SingleProductReviews reviews={reviews} productId={id} />
       )}

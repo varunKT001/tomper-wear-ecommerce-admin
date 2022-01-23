@@ -55,7 +55,7 @@ function OrdersTable({ orders }) {
   };
 
   return (
-    <SimpleGrid bg='white' p={5} shadow='lg' borderRadius='lg'>
+    <SimpleGrid bg='white' p={5} shadow='lg' borderRadius='lg' overflowX='auto'>
       {loading ? (
         <HStack my={8} alignItems='center' justifyContent='center'>
           <Spinner size='lg' color='brown.500' />
