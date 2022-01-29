@@ -78,7 +78,6 @@ export const OrderProvider = ({ children }) => {
     try {
       const response = await axios.delete(`${update_order_status}${id}`);
       const { success, message } = response.data;
-      fetchOrders();
       return { success, message };
     } catch (error) {
       const { success, message } = error.response.data;
@@ -92,7 +91,13 @@ export const OrderProvider = ({ children }) => {
 
   return (
     <OrderContext.Provider
-      value={{ ...state, fetchSingleOrder, updateOrderStatus, deleteOrder }}
+      value={{
+        ...state,
+        fetchOrders,
+        fetchSingleOrder,
+        updateOrderStatus,
+        deleteOrder,
+      }}
     >
       {children}
     </OrderContext.Provider>

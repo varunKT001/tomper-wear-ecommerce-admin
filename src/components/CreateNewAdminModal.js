@@ -23,6 +23,7 @@ function CreateNewAdminModal() {
     new_admin: { name, email, password, privilege },
     updateNewAdminDetails,
     createNewAdmin,
+    fetchAdmins,
   } = useAdminContext();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -44,13 +45,14 @@ function CreateNewAdminModal() {
     setLoading(false);
     if (response.success) {
       onClose();
-      return toast({
+      toast({
         position: 'top',
         description: `Account created: ${response.data.name}`,
         status: 'success',
         duration: 5000,
         isClosable: true,
       });
+      return await fetchAdmins();
     } else {
       onClose();
       return toast({

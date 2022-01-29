@@ -27,23 +27,23 @@ import { useOrderContext } from '../context/order_context';
 
 function OrdersTable({ orders }) {
   const toast = useToast();
-  const { deleteOrder } = useOrderContext();
+  const { fetchOrders, deleteOrder } = useOrderContext();
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async (id) => {
     setLoading(true);
     const response = await deleteOrder(id);
+    setLoading(false);
     if (response.success) {
-      setLoading(false);
-      return toast({
+      toast({
         position: 'top',
         description: response.message,
         status: 'success',
         duration: 5000,
         isClosable: true,
       });
+      return await fetchOrders();
     } else {
-      setLoading(false);
       return toast({
         position: 'top',
         description: response.message,

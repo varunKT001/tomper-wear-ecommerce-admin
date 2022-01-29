@@ -99,8 +99,8 @@ function CreateNewProductModal() {
       images: imageList,
     };
     const responseCreate = await createNewProduct(product);
+    setLoading(false);
     if (responseCreate.success) {
-      setLoading(false);
       onClose();
       return toast({
         position: 'top',
@@ -110,7 +110,6 @@ function CreateNewProductModal() {
         isClosable: true,
       });
     } else {
-      setLoading(false);
       return toast({
         position: 'top',
         description: responseCreate.message,

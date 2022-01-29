@@ -41,6 +41,7 @@ function UpdateProductModal({ id }) {
       featured = false,
     },
     single_product_loading,
+    fetchProducts,
     fetchSingleProduct,
     updateExistingProductDetails,
     updateProduct,
@@ -102,18 +103,18 @@ function UpdateProductModal({ id }) {
       images: imageList,
     };
     const responseCreate = await updateProduct(id, product);
+    setLoading(false);
     if (responseCreate.success) {
-      setLoading(false);
       onClose();
-      return toast({
+      toast({
         position: 'top',
         description: 'Product updated',
         status: 'success',
         duration: 5000,
         isClosable: true,
       });
+      await fetchProducts();
     } else {
-      setLoading(false);
       return toast({
         position: 'top',
         description: responseCreate.message,

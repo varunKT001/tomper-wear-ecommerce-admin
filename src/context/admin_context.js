@@ -43,7 +43,6 @@ export const AdminProvider = ({ children }) => {
     try {
       const response = await axios.put(`${admins_url}${id}`, { privilege });
       const { success, data } = response.data;
-      fetchAdmins();
       return { success, data };
     } catch (error) {
       const { success, message } = error.response.data;
@@ -55,7 +54,6 @@ export const AdminProvider = ({ children }) => {
     try {
       const response = await axios.delete(`${admins_url}${id}`);
       const { success, message } = response.data;
-      fetchAdmins();
       return { success, message };
     } catch (error) {
       const { success, message } = error.response.data;
@@ -74,7 +72,6 @@ export const AdminProvider = ({ children }) => {
     try {
       const response = await axios.post(register_url, new_admin);
       const { success, data } = response.data;
-      fetchAdmins();
       return { success, data };
     } catch (error) {
       const { success, message } = error.response.data;
@@ -90,6 +87,7 @@ export const AdminProvider = ({ children }) => {
     <AdminContext.Provider
       value={{
         ...state,
+        fetchAdmins,
         updateAdminPrivilege,
         deleteAdmin,
         updateNewAdminDetails,

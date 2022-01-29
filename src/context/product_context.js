@@ -71,7 +71,6 @@ export const ProductProvider = ({ children }) => {
     try {
       const response = await axios.delete(`${update_product_url}${id}`);
       const { success, message } = response.data;
-      fetchProducts();
       return { success, message };
     } catch (error) {
       const { success, message } = error.response.data;
@@ -135,7 +134,7 @@ export const ProductProvider = ({ children }) => {
     try {
       const response = await axios.put(`${update_product_url}${id}`, product);
       const { success, message } = response.data;
-      fetchProducts();
+      // fetchProducts();
       return { success, message };
     } catch (error) {
       const { success, message } = error.response.data;
@@ -171,6 +170,7 @@ export const ProductProvider = ({ children }) => {
         updateNewProductDetails,
         updateExistingProductDetails,
         createNewProduct,
+        fetchProducts,
         fetchSingleProduct,
         updateProduct,
         deleteReview,

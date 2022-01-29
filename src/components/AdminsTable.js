@@ -19,25 +19,25 @@ import { useAdminContext } from '../context/admin_context';
 
 function AdminsTable({ admins }) {
   const toast = useToast();
-  const { updateAdminPrivilege, deleteAdmin } = useAdminContext();
+  const { updateAdminPrivilege, deleteAdmin, fetchAdmins } = useAdminContext();
   const [loading, setLoading] = useState(false);
 
   const handleEdit = async (e, id) => {
     setLoading(true);
     const privilege = e.target.value;
     const response = await updateAdminPrivilege(id, privilege);
+    setLoading(false);
     if (response.success) {
-      setLoading(false);
       const { name, privilege } = response.data;
-      return toast({
+      toast({
         position: 'top',
         description: `${name}'s privilege changed to ${privilege}`,
         status: 'success',
         duration: 5000,
         isClosable: true,
       });
+      return await fetchAdmins();
     } else {
-      setLoading(false);
       return toast({
         position: 'top',
         description: response.message,
@@ -51,17 +51,17 @@ function AdminsTable({ admins }) {
   const handleDelete = async (id) => {
     setLoading(true);
     const response = await deleteAdmin(id);
+    setLoading(false);
     if (response.success) {
-      setLoading(false);
-      return toast({
+      toast({
         position: 'top',
         description: response.message,
         status: 'success',
         duration: 5000,
         isClosable: true,
       });
+      return await fetchAdmins();
     } else {
-      setLoading(false);
       return toast({
         position: 'top',
         description: response.message,

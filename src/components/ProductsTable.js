@@ -27,23 +27,23 @@ import UpdateProductModal from './UpdateProductModal';
 
 function ProductsTable({ products }) {
   const toast = useToast();
-  const { deleteProduct } = useProductContext();
+  const { fetchProducts, deleteProduct } = useProductContext();
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async (id) => {
     setLoading(true);
     const response = await deleteProduct(id);
+    setLoading(false);
     if (response.success) {
-      setLoading(false);
-      return toast({
+      toast({
         position: 'top',
         description: response.message,
         status: 'success',
         duration: 5000,
         isClosable: true,
       });
+      return await fetchProducts();
     } else {
-      setLoading(false);
       return toast({
         position: 'top',
         description: response.message,
