@@ -74,6 +74,24 @@ function CreateNewProductModal() {
   };
 
   const handleSubmit = async () => {
+    if (
+      !name ||
+      !price ||
+      !stock ||
+      !description ||
+      colors.length < 1 ||
+      sizes.length < 1 ||
+      !category ||
+      !company
+    ) {
+      return toast({
+        position: 'top',
+        description: 'Provide all the details',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
     if (imageList.length < 1) {
       return toast({
         position: 'top',

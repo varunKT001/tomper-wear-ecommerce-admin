@@ -86,7 +86,9 @@ export const ProductProvider = ({ children }) => {
     }
     if (name === 'colors' || name === 'sizes') {
       value = value.replace(/\s+/g, '');
-      if (value.indexOf(',') > -1) {
+      if (value === '') {
+        value = [];
+      } else if (value.indexOf(',') > -1) {
         value = value.split(',');
       } else {
         value = value.split();
@@ -106,7 +108,9 @@ export const ProductProvider = ({ children }) => {
     }
     if (name === 'colors' || name === 'sizes') {
       value = value.replace(/\s+/g, '');
-      if (value.indexOf(',') > -1) {
+      if (value === '') {
+        value = [];
+      } else if (value.indexOf(',') > -1) {
         value = value.split(',');
       } else {
         value = value.split();
