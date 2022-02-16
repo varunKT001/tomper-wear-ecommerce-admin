@@ -109,13 +109,13 @@ function ProductsTable({ products }) {
                       </MenuButton>
                       <MenuList>
                         <Link to={`/products/${id}`}>
-                          <MenuItem>VIEW</MenuItem>
+                          <MenuItem>View</MenuItem>
                         </Link>
                         <MenuItem>
                           <UpdateProductModal id={id} />
                         </MenuItem>
                         <MenuItem onClick={() => handleDelete(id)}>
-                          DELETE
+                          Delete
                         </MenuItem>
                       </MenuList>
                     </Menu>

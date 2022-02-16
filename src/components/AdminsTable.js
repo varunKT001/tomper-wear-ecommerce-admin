@@ -104,6 +104,7 @@ function AdminsTable({ admins }) {
                     <HStack spacing='5'>
                       <Select
                         maxW={125}
+                        focusBorderColor='brown.500'
                         value={privilege}
                         onChange={(e) => handleEdit(e, adminId)}
                       >
@@ -112,10 +113,11 @@ function AdminsTable({ admins }) {
                         <option value='low'>Low</option>
                       </Select>
                       <Button
+                        variant='outline'
                         colorScheme='red'
                         onClick={() => handleDelete(adminId)}
                       >
-                        DELETE
+                        Delete
                       </Button>
                     </HStack>
                   </Td>

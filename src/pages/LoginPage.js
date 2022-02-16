@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useUserContext } from '../context/user_context';
 import { useToast } from '@chakra-ui/react';
+import { PreLoader } from '../components';
+import useMounted from '../hooks/useMounted';
+import logo from '../assets/logo.svg';
 import {
   Flex,
   Box,
@@ -9,15 +12,17 @@ import {
   Input,
   Stack,
   Button,
-  Heading,
-  useColorModeValue,
+  Image,
 } from '@chakra-ui/react';
 
 export default function LoginPage() {
+  const { login, authLoading } = useUserContext();
+  const toast = useToast();
+  const mounted = useMounted();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const toast = useToast();
-  const { login } = useUserContext();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
     if (!email || !password) {
@@ -30,7 +35,11 @@ export default function LoginPage() {
         isClosable: true,
       });
     }
+    setLoading(true);
     const response = await login(email, password);
+    if (mounted.current) {
+      setLoading(false);
+    }
     if (response.success) {
       return toast({
         position: 'top',
@@ -50,28 +59,24 @@ export default function LoginPage() {
     }
   };
 
+  if (authLoading) {
+    return <PreLoader />;
+  }
+
   return (
-    <Flex
-      minH={'100vh'}
-      align={'center'}
-      justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}
-    >
+    <Flex minH={'100vh'} align={'center'} justify={'center'} bg={'gray.50'}>
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+          <Image src={logo} alt='logo' w='50%' />
         </Stack>
-        <Box
-          rounded={'lg'}
-          bg={useColorModeValue('white', 'gray.700')}
-          boxShadow={'lg'}
-          p={8}
-        >
+        <Box bg={'white'} rounded={'lg'} boxShadow={'lg'} p={8}>
           <Stack spacing={4}>
             <FormControl id='email'>
               <FormLabel>Email address</FormLabel>
               <Input
                 type='email'
+                variant='filled'
+                focusBorderColor='brown.500'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -80,12 +85,15 @@ export default function LoginPage() {
               <FormLabel>Password</FormLabel>
               <Input
                 type='password'
+                variant='filled'
+                focusBorderColor='brown.500'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </FormControl>
             <Stack spacing={10}>
               <Button
+                isLoading={loading}
                 bg={'brown.400'}
                 color={'white'}
                 _hover={{
@@ -93,7 +101,7 @@ export default function LoginPage() {
                 }}
                 onClick={handleSubmit}
               >
-                Sign in
+                Login
               </Button>
             </Stack>
           </Stack>

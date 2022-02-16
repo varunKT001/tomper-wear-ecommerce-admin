@@ -78,6 +78,7 @@ function SingleProductReviews({ reviews, productId }) {
                 <Button
                   rightIcon={<MdDelete />}
                   size='xs'
+                  variant='outline'
                   colorScheme='red'
                   mt={4}
                   onClick={() => handleDelete(id)}

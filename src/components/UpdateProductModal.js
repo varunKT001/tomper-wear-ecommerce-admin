@@ -73,7 +73,6 @@ function UpdateProductModal({ id }) {
   const removeImage = (index) => {
     setImageList((prev) => {
       prev.splice(index, 1);
-      console.log(prev);
       return [...prev];
     });
   };
@@ -140,7 +139,7 @@ function UpdateProductModal({ id }) {
           onOpen();
         }}
       >
-        EDIT
+        Edit
       </Text>
 
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
@@ -155,6 +154,7 @@ function UpdateProductModal({ id }) {
                 ref={initialRef}
                 placeholder='Product Name'
                 name='name'
+                focusBorderColor='brown.500'
                 value={name}
                 onChange={updateExistingProductDetails}
               />
@@ -166,6 +166,7 @@ function UpdateProductModal({ id }) {
                 type='number'
                 placeholder='Product Price'
                 name='price'
+                focusBorderColor='brown.500'
                 value={price}
                 onChange={updateExistingProductDetails}
               />
@@ -177,6 +178,7 @@ function UpdateProductModal({ id }) {
                 type='number'
                 placeholder='Product Stock'
                 name='stock'
+                focusBorderColor='brown.500'
                 value={stock}
                 onChange={updateExistingProductDetails}
               />
@@ -187,6 +189,7 @@ function UpdateProductModal({ id }) {
               <Textarea
                 placeholder='Product Description'
                 name='description'
+                focusBorderColor='brown.500'
                 value={description}
                 onChange={updateExistingProductDetails}
               />
@@ -197,6 +200,7 @@ function UpdateProductModal({ id }) {
               <Input
                 placeholder='Product Category'
                 name='category'
+                focusBorderColor='brown.500'
                 value={category}
                 onChange={updateExistingProductDetails}
               />
@@ -207,6 +211,7 @@ function UpdateProductModal({ id }) {
               <Input
                 placeholder='Product Company'
                 name='company'
+                focusBorderColor='brown.500'
                 value={company}
                 onChange={updateExistingProductDetails}
               />
@@ -217,6 +222,7 @@ function UpdateProductModal({ id }) {
               <Input
                 placeholder='Product Sizes (comma separated)'
                 name='sizes'
+                focusBorderColor='brown.500'
                 value={sizes}
                 onChange={updateExistingProductDetails}
               />
@@ -228,6 +234,7 @@ function UpdateProductModal({ id }) {
               <Input
                 placeholder='Product Colors (comma separated)'
                 name='colors'
+                focusBorderColor='brown.500'
                 value={colors}
                 onChange={updateExistingProductDetails}
               />
@@ -238,11 +245,11 @@ function UpdateProductModal({ id }) {
             <FormControl mt={4}>
               <FormLabel>Images</FormLabel>
               <Center
-                bg='blue.50'
+                bg='brown.50'
                 minHeight={100}
                 my={5}
                 borderWidth={3}
-                borderColor='blue.100'
+                borderColor='brown.200'
                 borderStyle='dashed'
                 borderRadius='lg'
                 {...getRootProps()}
@@ -272,8 +279,9 @@ function UpdateProductModal({ id }) {
                         borderRadius='lg'
                       />
                       <Button
-                        colorScheme='red'
                         size='xs'
+                        variant='outline'
+                        colorScheme='red'
                         onClick={() => removeImage(index)}
                       >
                         Remove
@@ -287,6 +295,7 @@ function UpdateProductModal({ id }) {
             <FormControl mt={4}>
               <Checkbox
                 name='shipping'
+                colorScheme='brown'
                 isChecked={shipping}
                 onChange={updateExistingProductDetails}
               >
@@ -297,6 +306,7 @@ function UpdateProductModal({ id }) {
             <FormControl mt={4}>
               <Checkbox
                 name='featured'
+                colorScheme='brown'
                 isChecked={featured}
                 onChange={updateExistingProductDetails}
               >

@@ -121,10 +121,10 @@ function OrdersTable({ orders }) {
                       </MenuButton>
                       <MenuList>
                         <Link to={`/orders/${id}`}>
-                          <MenuItem>VIEW</MenuItem>
+                          <MenuItem>View</MenuItem>
                         </Link>
                         <MenuItem onClick={() => handleDelete(id)}>
-                          DELETE
+                          Delete
                         </MenuItem>
                       </MenuList>
                     </Menu>

@@ -16,6 +16,7 @@ import ImagesList from './ImagesList';
 import SingleProductInfo from './SingleProductInfo';
 import Stars from './Stars';
 import SingleProductReviews from './SingleProductReviews';
+import PreLoader from './PreLoader';
 
 export {
   SidebarWithHeader,
@@ -36,4 +37,5 @@ export {
   SingleProductInfo,
   Stars,
   SingleProductReviews,
+  PreLoader,
 };

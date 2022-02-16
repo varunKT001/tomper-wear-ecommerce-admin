@@ -8,6 +8,7 @@ const UserContext = React.createContext();
 
 export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
 
   const setUser = (user) => {
     setCurrentUser(user);
@@ -15,11 +16,14 @@ export const UserProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
+      setAuthLoading(true);
       const response = await axios.post(auth_url);
       const { data } = response.data;
       setUser(data);
+      setAuthLoading(false);
     } catch (error) {
       console.log(error.response);
+      setAuthLoading(false);
     }
   };
 
@@ -53,7 +57,7 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ currentUser, login, logout }}>
+    <UserContext.Provider value={{ currentUser, authLoading, login, logout }}>
       {children}
     </UserContext.Provider>
   );

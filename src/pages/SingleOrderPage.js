@@ -102,6 +102,7 @@ function SingleOrderPage() {
         <Text>STATUS: </Text>
         <Select
           variant='filled'
+          focusBorderColor='brown.500'
           value={single_order_status}
           onChange={handleChange}
         >

@@ -123,7 +123,7 @@ function CreateNewProductModal() {
   return (
     <>
       <Button colorScheme='brown' onClick={onOpen}>
-        CREATE NEW PRODUCT
+        Create New Product
       </Button>
 
       <Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
@@ -138,6 +138,7 @@ function CreateNewProductModal() {
                 ref={initialRef}
                 placeholder='Product Name'
                 name='name'
+                focusBorderColor='brown.500'
                 value={name}
                 onChange={updateNewProductDetails}
               />
@@ -149,6 +150,7 @@ function CreateNewProductModal() {
                 type='number'
                 placeholder='Product Price'
                 name='price'
+                focusBorderColor='brown.500'
                 value={price}
                 onChange={updateNewProductDetails}
               />
@@ -160,6 +162,7 @@ function CreateNewProductModal() {
                 type='number'
                 placeholder='Product Stock'
                 name='stock'
+                focusBorderColor='brown.500'
                 value={stock}
                 onChange={updateNewProductDetails}
               />
@@ -170,6 +173,7 @@ function CreateNewProductModal() {
               <Textarea
                 placeholder='Product Description'
                 name='description'
+                focusBorderColor='brown.500'
                 value={description}
                 onChange={updateNewProductDetails}
               />
@@ -180,6 +184,7 @@ function CreateNewProductModal() {
               <Input
                 placeholder='Product Category'
                 name='category'
+                focusBorderColor='brown.500'
                 value={category}
                 onChange={updateNewProductDetails}
               />
@@ -190,6 +195,7 @@ function CreateNewProductModal() {
               <Input
                 placeholder='Product Company'
                 name='company'
+                focusBorderColor='brown.500'
                 value={company}
                 onChange={updateNewProductDetails}
               />
@@ -200,6 +206,7 @@ function CreateNewProductModal() {
               <Input
                 placeholder='Product Sizes (comma separated)'
                 name='sizes'
+                focusBorderColor='brown.500'
                 value={sizes}
                 onChange={updateNewProductDetails}
               />
@@ -211,6 +218,7 @@ function CreateNewProductModal() {
               <Input
                 placeholder='Product Colors (comma separated)'
                 name='colors'
+                focusBorderColor='brown.500'
                 value={colors}
                 onChange={updateNewProductDetails}
               />
@@ -221,11 +229,11 @@ function CreateNewProductModal() {
             <FormControl mt={4}>
               <FormLabel>Images</FormLabel>
               <Center
-                bg='blue.50'
+                bg='brown.50'
                 minHeight={100}
                 my={5}
                 borderWidth={3}
-                borderColor='blue.100'
+                borderColor='brown.200'
                 borderStyle='dashed'
                 borderRadius='lg'
                 {...getRootProps()}
@@ -255,8 +263,9 @@ function CreateNewProductModal() {
                         borderRadius='lg'
                       />
                       <Button
-                        colorScheme='red'
                         size='xs'
+                        variant='outline'
+                        colorScheme='red'
                         onClick={() => removeImage(index)}
                       >
                         Remove
@@ -270,6 +279,7 @@ function CreateNewProductModal() {
             <FormControl mt={4}>
               <Checkbox
                 name='shipping'
+                colorScheme='brown'
                 isChecked={shipping}
                 onChange={updateNewProductDetails}
               >
@@ -280,6 +290,7 @@ function CreateNewProductModal() {
             <FormControl mt={4}>
               <Checkbox
                 name='featured'
+                colorScheme='brown'
                 isChecked={featured}
                 onChange={updateNewProductDetails}
               >

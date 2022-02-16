@@ -93,7 +93,7 @@ export default function MobileNav({ onOpen, ...rest }) {
               bg={useColorModeValue('white', 'gray.900')}
               borderColor={useColorModeValue('gray.200', 'gray.700')}
             >
-              <MenuItem onClick={handleSubmit}>Sign out</MenuItem>
+              <MenuItem onClick={handleSubmit}>Logout</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
