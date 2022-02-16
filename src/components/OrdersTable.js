@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { formatPrice, getOrderStatusColor } from '../utils/helpers';
 import { BiChevronDown } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
+import { useUserContext } from '../context/user_context';
 import {
   Table,
   Thead,
@@ -27,6 +28,7 @@ import { useOrderContext } from '../context/order_context';
 
 function OrdersTable({ orders }) {
   const toast = useToast();
+  const { currentUser } = useUserContext();
   const { fetchOrders, deleteOrder } = useOrderContext();
   const [loading, setLoading] = useState(false);
 
@@ -123,9 +125,11 @@ function OrdersTable({ orders }) {
                         <Link to={`/orders/${id}`}>
                           <MenuItem>View</MenuItem>
                         </Link>
-                        <MenuItem onClick={() => handleDelete(id)}>
-                          Delete
-                        </MenuItem>
+                        {currentUser.privilege !== 'low' && (
+                          <MenuItem onClick={() => handleDelete(id)}>
+                            Delete
+                          </MenuItem>
+                        )}
                       </MenuList>
                     </Menu>
                   </Td>
