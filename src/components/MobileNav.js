@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../assets/logo.svg';
 import {
   IconButton,
@@ -15,16 +15,23 @@ import {
   MenuList,
   useToast,
   Image,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
 } from '@chakra-ui/react';
 import { useUserContext } from '../context/user_context';
-import { FiMenu, FiChevronDown } from 'react-icons/fi';
+import { FiMenu, FiChevronDown, FiChevronRight } from 'react-icons/fi';
+import { useLocation, Link } from 'react-router-dom';
 
 export default function MobileNav({ onOpen, ...rest }) {
   const {
     currentUser: { name },
     logout,
   } = useUserContext();
+  const location = useLocation();
   const toast = useToast();
+
+  const [breadCrumbs, setBreadCrumbs] = useState([]);
 
   const handleSubmit = async () => {
     const { message } = await logout();
@@ -37,6 +44,20 @@ export default function MobileNav({ onOpen, ...rest }) {
     });
   };
 
+  useEffect(() => {
+    let path = location.pathname.substring(1).split('/');
+    path = path.map((item, index) => {
+      if (item === '') {
+        return { name: 'home', path: '/' };
+      }
+      return {
+        name: item,
+        path: `${index === 1 ? `/${path[0]}/${item}` : `/${item}`}`,
+      };
+    });
+    setBreadCrumbs(path);
+  }, [location]);
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -46,7 +67,7 @@ export default function MobileNav({ onOpen, ...rest }) {
       bg={useColorModeValue('white', 'gray.900')}
       borderBottomWidth='1px'
       borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-      justifyContent={{ base: 'space-between', md: 'flex-end' }}
+      justifyContent='space-between'
       {...rest}
     >
       <IconButton
@@ -62,6 +83,33 @@ export default function MobileNav({ onOpen, ...rest }) {
         boxSize='150px'
         display={{ base: 'flex', md: 'none' }}
       />
+
+      <Breadcrumb
+        spacing='8px'
+        separator={<FiChevronRight color='gray.500' />}
+        display={{ base: 'none', md: 'flex' }}
+      >
+        <BreadcrumbItem>
+          <BreadcrumbLink as={Link} to='/'>
+            Home
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+
+        {breadCrumbs[0]?.name !== 'home' &&
+          breadCrumbs.map((item, index) => {
+            return (
+              <BreadcrumbItem key={index}>
+                <BreadcrumbLink
+                  as={Link}
+                  to={item.path}
+                  textTransform='capitalize'
+                >
+                  {item.name}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            );
+          })}
+      </Breadcrumb>
 
       <HStack spacing={{ base: '0', md: '6' }}>
         <Flex alignItems={'center'}>
