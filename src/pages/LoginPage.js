@@ -75,6 +75,7 @@ export default function LoginPage() {
               <FormLabel>Email address</FormLabel>
               <Input
                 type='email'
+                placeholder='Enter your email address'
                 variant='filled'
                 focusBorderColor='brown.500'
                 value={email}
@@ -85,6 +86,7 @@ export default function LoginPage() {
               <FormLabel>Password</FormLabel>
               <Input
                 type='password'
+                placeholder='Enter your password'
                 variant='filled'
                 focusBorderColor='brown.500'
                 value={password}
