@@ -22,7 +22,7 @@ This is the Admin dashboard of TomperWear build with MERN stack and deployed wit
 
 ## 📷 Link to [Screenshots](./SCREENSHOTS.md)
 
-## 📷 Link to [Video demo](https://youtu.be/5oGqxtSN0jY)
+## 🎥 Link to [Video demo](https://youtu.be/5oGqxtSN0jY)
 
 ## 🧾 Description
 
