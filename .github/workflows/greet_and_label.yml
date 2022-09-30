@@ -15,7 +15,6 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_message: 'Woohoo 🚀, thank you @${{ github.actor }} for your amazing contribution 😄'
-          label_1: 'GSSoC22'
            
       - uses: Manoj-Paramsetti/greets-action@main
         if: ${{ github.event.pull_request.merged == false}}
