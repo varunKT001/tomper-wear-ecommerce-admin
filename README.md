@@ -215,6 +215,15 @@ This is privilege is ideal for the delivery-agent(s).
 | Test Moderate | test.moderate@tomperwear.com | testmoderate1212 |
 | Test Low      | test.low@tomperwear.com      | testlow1212      |
 
+NOTE: These are just for testing purpose. Please don't:
+
+1. Update or delete an existing product.
+2. Delete product reviews.
+3. Create new admin users.
+4. Delete existing admin users.
+
+For testing out things, you can create a new product, try out things and after that delete the product that you created.
+
 ## 😎 Team Members
 
 1. Varun Kumar Tiwar - 2020IMT-112
